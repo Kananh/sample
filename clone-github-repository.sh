@@ -85,10 +85,11 @@ fi
 
 # === Clone or Overwrite Repo ===
 CLONE_URL="https://x-access-token:$INSTALL_TOKEN@github.com/$REPO_OWNER/$REPO_NAME.git"
-TARGET_DIR="~/VGW/repository/$REPO_NAME"
+TARGET_DIR="$HOME/VGW/repository/$REPO_NAME/"
 
-if [[ -d "$TARGET_DIR/.git" ]]; then
-  echo "🔄 Repository '$REPO_NAME' already exists. Pulling latest changes..."
+echo "Checking if directory $TARGET_DIR.git exists..."
+if [[ -d "$TARGET_DIR.git" ]]; then
+  echo "🔄 Repository '$TARGET_DIR' already exists. Pulling latest changes..."
   cd "$TARGET_DIR"
   git remote set-url origin "$CLONE_URL"
   git fetch origin
@@ -96,6 +97,6 @@ if [[ -d "$TARGET_DIR/.git" ]]; then
   git clean -fdx  # remove untracked files and directories
   cd ..
 else
-  echo "📥 Cloning $REPO_OWNER/$REPO_NAME..."
-  git clone "$CLONE_URL"
+  echo "📥 Cloning $REPO_OWNER/$REPO_NAME into $TARGET_DIR..."
+  git clone "$CLONE_URL" "$TARGET_DIR"
 fi
